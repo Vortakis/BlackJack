@@ -1,8 +1,9 @@
 package main;
 
 /**
+ * BlackJack Base Class.
+ * 
  * @author Nikos Pavlou
- *
  */
 public class BlackJack {
 
