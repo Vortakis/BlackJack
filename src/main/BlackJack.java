@@ -1,7 +1,7 @@
 package main;
 
 /**
- * @author vortakis
+ * @author Nikos Pavlou
  *
  */
 public class BlackJack {
