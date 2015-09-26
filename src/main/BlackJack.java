@@ -1,17 +1,16 @@
 package main;
 
 /**
- * @author Nikos Pavlou
+ * BlackJack Base Class.
  *
+ * @author Nikos Pavlou
  */
 public class BlackJack {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+    /**
+     * @param args
+     */
+    public static void main(final String[] args) {
+        // TODO Auto-generated method stub
+    }
 }
