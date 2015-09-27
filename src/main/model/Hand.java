@@ -14,7 +14,7 @@ public class Hand {
     private final ArrayList<Card> hand;
 
     /**
-     *
+     * Constructor for Hand Model Class.
      */
     public Hand() {
         this.hand = new ArrayList<>();
