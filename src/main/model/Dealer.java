@@ -7,10 +7,56 @@ package main.model;
  */
 public class Dealer extends Hand {
 
+    /**     */
+    private Deck deck;
+
     /**
      * Dealer constructor method.
+     *
+     * @param numOfDecks the number of decks in the game.
      */
-    public Dealer() {
+    public Dealer(final int numOfDecks) {
         super();
+        this.deck = new Deck(numOfDecks);
+
+        System.out.println("Dealer shuffled and placed " + numOfDecks + " in the 'shoe'.");
+    }
+
+    /**
+     * @return the deck
+     */
+    public Deck getDeck() {
+        return this.deck;
+    }
+
+    /**
+     * @param deck the deck to set
+     */
+    public void setDeck(final Deck deck) {
+        this.deck = deck;
+    }
+
+    /**
+     * Adds a card from the deck to the hand.
+     *
+     * @param card drawn from the deck.
+     * @return boolean whether sum of the cards in hand is below or equal to 21.
+     */
+    public boolean addCard() {
+        // Dealer adds a card.
+        return super.addCard(this.deck.dealCard());
+    }
+
+    public Card dealCard() {
+        return this.deck.dealCard();
+    }
+
+    /**
+    *
+    */
+    @Override
+    public void printHand(final boolean showFirstCard) {
+        System.out.println("Dealer");
+        super.printHand(showFirstCard);
     }
 }

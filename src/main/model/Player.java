@@ -71,6 +71,27 @@ public class Player extends Hand {
      */
     public void setBet(final int bet) {
         this.bet = bet;
+        this.chips -= bet;
     }
 
+    /**
+     *
+     */
+    public void printPlayerStats() {
+        System.out.println("=========================================");
+        System.out.println("Player: " + this.name);
+        System.out.println("Chips: " + this.chips);
+        System.out.println("Current Bet:" + this.bet);
+        System.out.println("=========================================");
+
+    }
+
+    /**
+    *
+    */
+    @Override
+    public void printHand(final boolean showFirstCard) {
+        System.out.println(this.name);
+        super.printHand(showFirstCard);
+    }
 }

@@ -39,8 +39,11 @@ public class BlackJack {
         System.out.print("Enter your name: ");
         playerName = scanner.nextLine();
 
+        // Print an empty line.
+        System.out.println();
+
         // Prompt the user to set the number of decks.
-        System.out.print("Enter the number of Decks, enter '0' for Default(4 decks): ");
+        System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
         numOfDecks = scanner.nextLine();
         // Default is set to 4.
         if (numOfDecks.equals("")) {
@@ -48,14 +51,20 @@ public class BlackJack {
         }
         System.out.println("Number of Decks: " + numOfDecks);
 
+        // Print an empty line.
+        System.out.println();
+
         // Prompt the user to set the number of chips to start with.
-        System.out.print("Enter the number of Chips you want to buy, enter '0' for Default(100 chips): ");
+        System.out.print("Enter the number of Chips you want to buy, or press Enter for Default(100 chips): ");
         numOfChips = scanner.nextLine();
         // Default is set to 100.
         if (numOfChips.equals("")) {
             numOfChips = "100";
         }
         System.out.println("Initilal number of Chips: " + numOfChips);
+
+        // Print an empty line.
+        System.out.println();
 
         // Start the game message.
         System.out.println("Good Job! Lets start the game!");
@@ -64,6 +73,9 @@ public class BlackJack {
             System.in.read();
         } catch (final Exception e) {
         }
+
+        // Print an empty line.
+        System.out.println("=========================================");
 
         /**
          * GAME STARTS HERE.
@@ -75,5 +87,6 @@ public class BlackJack {
         // Initialise game.
         game.initialiseGame(playerName, Integer.parseInt(numOfDecks), Integer.parseInt(numOfChips));
 
+        game.playGame();
     }
 }

@@ -99,7 +99,8 @@ public class Hand {
      * @param showFirstCard boolean if this card is face-up(true) or
      *            face-down(false).
      */
-    public void renderHand(final boolean showFirstCard) {
+    public void printHand(final boolean showFirstCard) {
+        System.out.println("-----------------");
         // Loop through the cards in the hand.
         for (int cardIndex = 0; cardIndex < this.hand.size(); cardIndex++) {
             // If first card is hidden, don't display it.
@@ -109,6 +110,7 @@ public class Hand {
                 System.out.println(this.hand.get(cardIndex).toString());
             }
         }
+        System.out.println("-----------------");
     }
 
 }
