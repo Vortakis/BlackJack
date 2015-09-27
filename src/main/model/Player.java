@@ -10,6 +10,9 @@ package main.model;
  */
 public class Player extends Hand {
 
+    /** Name of the player. */
+    private String name;
+
     /** Number of chips the player holds. */
     private int chips;
 
@@ -19,11 +22,27 @@ public class Player extends Hand {
     /**
      * Player constructor method.
      *
+     * @param name of the player.
      * @param chips number of chips the player starts.
      */
-    public Player(final int chips) {
+    public Player(final String name, final int chips) {
         super();
+        this.name = name;
         this.chips = chips;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(final String name) {
+        this.name = name;
     }
 
     /**
