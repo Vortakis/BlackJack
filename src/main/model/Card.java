@@ -40,6 +40,8 @@ public class Card {
          * Constructor for enum type: Suit.
          *
          * @param id associated with a card suit.
+         * @param name of the suit.
+         * @param symbol of the suit.
          */
         Suit(final int id, final String name, final char symbol) {
             this.id = id;
