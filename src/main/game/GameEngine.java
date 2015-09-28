@@ -149,8 +149,9 @@ public class GameEngine {
         String sideRule;
         System.out.println("-----------------------------------------");
         System.out.println(this.player.getName() + ", ");
-        System.out.println("type 'DD' if you want to Double-Down, ");
-        System.out.print("     'I'  if you want Insurance: ");
+        System.out.println("Type 'DD' if you want to Double-Down, ");
+        System.out.println("     'I'  if you want Insurance, ");
+        System.out.print("     or just press Enter to continue: ");
         boolean invalid = true;
 
         do {
