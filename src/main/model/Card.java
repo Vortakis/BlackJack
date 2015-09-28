@@ -16,16 +16,16 @@ public class Card {
      */
     public enum Suit {
         /** Hearts */
-        HEARTS(0, "Hearts", '\u2764'),
+        HEARTS(0, "Hearts", '\u2665'),
 
         /** Spades */
-        SPADES(1, "Spades", '\u2660'),
+        SPADES(1, "Spades", '\u2663'),
 
         /** Diamonds */
         DIAMONDS(2, "Diamonds", '\u2666'),
 
         /** Clubs */
-        CLUBS(3, "Clubs", '\u2663');
+        CLUBS(3, "Clubs", '\u2660');
 
         /** Suit id. */
         private final int id;

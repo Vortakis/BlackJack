@@ -10,6 +10,10 @@ package main.model;
  */
 public class Player extends Hand {
 
+    public enum SideRule {
+        INSURANCE, DOUBLE_DOWN, NONE, SURRENDER;
+    }
+
     /** Name of the player. */
     private String name;
 
@@ -18,6 +22,15 @@ public class Player extends Hand {
 
     /** Bet set by the player. */
     private int bet;
+
+    private SideRule sideRule;
+
+    /** Insurance set by the player. */
+    private int insurance;
+
+    private int doubleDown;
+
+    private int surrender;
 
     /**
      * Player constructor method.
@@ -29,6 +42,7 @@ public class Player extends Hand {
         super();
         this.name = name;
         this.chips = chips;
+        this.sideRule = SideRule.NONE;
     }
 
     /**
@@ -74,21 +88,76 @@ public class Player extends Hand {
         this.chips -= bet;
     }
 
-    /**
-     * Doubles the bet the player has pre-set.
-     */
-    public void doubleBet() {
-        this.chips -= this.bet;
-        this.bet *= 2;
+    public SideRule getSideRule() {
+        return this.sideRule;
+    }
+
+    public void setSideRule(final SideRule sideRule) {
+        this.sideRule = sideRule;
+    }
+
+    public int getInsurance() {
+        return this.insurance;
+    }
+
+    public void setInsurance() {
+        this.sideRule = SideRule.INSURANCE;
+        this.insurance = this.bet / 2;
+        this.chips -= this.insurance;
+    }
+
+    public void resetInsurance() {
+        this.insurance = 0;
+    }
+
+    public int getDoubleDown() {
+        return this.doubleDown;
+    }
+
+    public void setDoubleDown() {
+        this.sideRule = SideRule.DOUBLE_DOWN;
+        this.doubleDown = this.bet;
+        this.chips -= this.doubleDown;
+    }
+
+    public int getSurrender() {
+        return this.surrender;
+    }
+
+    public void setSurrender() {
+        this.sideRule = SideRule.SURRENDER;
+        this.surrender = this.bet / 2;
+        this.chips += this.surrender;
+        this.bet = 0;
+    }
+
+    public void resetBets() {
+        this.sideRule = SideRule.NONE;
+        this.doubleDown = 0;
+        this.insurance = 0;
+        this.surrender = 0;
+        this.bet = 0;
     }
 
     /**
      * Insurance the bet.
      */
-    public void insuranceBet() {
-        this.chips -= this.bet / 2;
-        this.bet += this.bet / 2;
-    }
+    /*
+     * public void insuranceBet() {
+     * this.chips -= this.bet / 2;
+     * this.bet += this.bet / 2;
+     * }
+     */
+
+    /**
+     * Doubles the bet the player has pre-set.
+     */
+    /*
+     * public void doubleBet() {
+     * this.chips -= this.bet;
+     * this.bet *= 2;
+     * }
+     */
 
     /**
      * Print player's stats.
@@ -98,6 +167,19 @@ public class Player extends Hand {
         System.out.println("Player: " + this.name);
         System.out.println("Chips: " + this.chips);
         System.out.println("Current Bet:" + this.bet);
+        switch (this.sideRule) {
+            case DOUBLE_DOWN:
+                System.out.println("DoubleDown:" + this.doubleDown);
+                break;
+            case INSURANCE:
+                System.out.println("Insurance:" + this.insurance);
+                break;
+            case SURRENDER:
+                System.out.println("Surrender:" + this.surrender);
+                break;
+            default:
+                break;
+        }
         System.out.println("=========================================");
 
     }

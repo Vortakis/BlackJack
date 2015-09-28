@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import main.model.Dealer;
 import main.model.Player;
+import main.model.Player.SideRule;
 
 /**
  * Game Engine class.
@@ -27,11 +28,8 @@ public class GameEngine {
     /** Scanner to read the command-line inputs. */
     private final Scanner scanner;
 
-    /** Double-down flag. */
-    private boolean doubleDownFlag = false;
-
     /** Insurance flag. */
-    private boolean insuranceFlag = false;
+    private final boolean insuranceFlag = false;
 
     /**
      * Game Engine constructor.
@@ -92,9 +90,12 @@ public class GameEngine {
      * Player bets chips for this game.
      */
     private void playerBets() {
+        String bet;
         System.out.println("-----------------------------------------");
-        System.out.print("Player " + this.player.getName() + ", please make a bet: ");
-        final String bet = this.scanner.nextLine();
+        do {
+            System.out.print("Player " + this.player.getName() + ", please make a bet: ");
+            bet = this.scanner.nextLine();
+        } while (bet.equals(""));
         System.out.println("-----------------------------------------");
         this.player.setBet(Integer.parseInt(bet));
 
@@ -151,6 +152,7 @@ public class GameEngine {
         System.out.println(this.player.getName() + ", ");
         System.out.println("Type 'DD' if you want to Double-Down, ");
         System.out.println("     'I'  if you want Insurance, ");
+        System.out.println("     'SUR'  if you want Surrender, ");
         System.out.print("     or just press Enter to continue: ");
         boolean invalid = true;
 
@@ -158,10 +160,11 @@ public class GameEngine {
             sideRule = this.scanner.nextLine();
             final int dealersFaceUpCard = this.dealer.getCardsInHand().get(0).getValue();
 
-            if (sideRule.equalsIgnoreCase("I") || sideRule.equalsIgnoreCase("DD") || sideRule.equals("")) {
+            if (sideRule.equalsIgnoreCase("SUR") || sideRule.equalsIgnoreCase("I") || sideRule.equalsIgnoreCase("DD")
+                    || sideRule.equals("")) {
                 if (sideRule.equalsIgnoreCase("I") && dealersFaceUpCard != 1) {
-                    System.out.println(
-                            "Invalid insurance, dealer's face-up card is not an Ace. Please provide a valid one: ");
+                    System.out
+                    .println("Invalid insurance, dealer's face-up card is not an Ace. Please provide a valid one: ");
                     invalid = true;
                 } else {
                     invalid = false;
@@ -180,9 +183,7 @@ public class GameEngine {
 
         switch (sideRule.toUpperCase()) {
             case "DD":
-                this.player.doubleBet();
-                this.doubleDownFlag = true;
-
+                this.player.setDoubleDown();
                 // Print updated player stas.
                 this.player.printPlayerStats();
 
@@ -190,8 +191,16 @@ public class GameEngine {
                 System.out.println();
                 break;
             case "I":
-                this.player.insuranceBet();
-                this.insuranceFlag = true;
+                this.player.setInsurance();
+
+                // Print updated player stas.
+                this.player.printPlayerStats();
+
+                // Print an empty line.
+                System.out.println();
+                break;
+            case "SUR":
+                this.player.setSurrender();
 
                 // Print updated player stas.
                 this.player.printPlayerStats();
@@ -218,9 +227,21 @@ public class GameEngine {
         String action;
 
         do {
-            if (this.insuranceFlag == true) {
+            if (this.player.getSideRule().equals(SideRule.INSURANCE)) {
                 System.out.println("-----------------------------------------");
-                System.out.println("Insurance: You are not allowed to take another card.");
+                System.out.println("Insurance! You are not allowed to take another card.");
+                System.out.println("-----------------------------------------");
+                // Print an empty line.
+                System.out.println();
+
+                // Set playerIsSafe to false.
+                playerIsSafe = false;
+
+                // Exit while loop.
+                break;
+            } else if (this.player.getSideRule().equals(SideRule.SURRENDER)) {
+                System.out.println("-----------------------------------------");
+                System.out.println("Surrendered!");
                 System.out.println("-----------------------------------------");
                 // Print an empty line.
                 System.out.println();
@@ -244,26 +265,23 @@ public class GameEngine {
                 // Print an empty line.
                 System.out.println();
 
-                if (this.doubleDownFlag == true) {
+                if (this.player.getSideRule().equals(SideRule.DOUBLE_DOWN)) {
                     System.out.println("-----------------------------------------");
                     System.out.println("Double-Down: You are not allowed to take another card.");
                     System.out.println("-----------------------------------------");
                     // Print an empty line.
                     System.out.println();
 
-                    // Reseting flag.
-                    this.doubleDownFlag = false;
-
                     // Exit while loop.
                     break;
                 }
             }
 
-        } while ((playerIsSafe) && (action.equalsIgnoreCase("h")));
+        } while (playerIsSafe && action.equalsIgnoreCase("h"));
 
         if (playerIsSafe == false) {
             System.out.println("-----------------------------------------");
-            System.out.println("Player Burnt: Sum = " + this.player.getHandSum());
+            System.out.println("Player Burnt Cards: Sum = " + this.player.getHandSum());
             System.out.println("-----------------------------------------");
 
             // Print an empty line.
@@ -282,18 +300,15 @@ public class GameEngine {
      */
     private boolean dealersTurn() {
         boolean dealerIsSafe = true;
-        if (this.insuranceFlag == true && this.dealer.getHandSum() == 21) {
-            this.player.setChips(this.player.getChips() + this.player.getBet());
-            this.player.setBet(0);
-            this.insuranceFlag = false;
-        } else {
-            final int tempChips = this.player.getChips();
-            this.player.setBet(this.player.getBet() / 3);
-            this.player.setChips(tempChips);
-            this.insuranceFlag = false;
+        if (this.player.getSideRule().equals(SideRule.INSURANCE) && this.dealer.getHandSum() == 21) {
+            final int earnedChips = this.player.getInsurance() + this.player.getBet();
+            this.player.setChips(earnedChips);
+            return false;
+        } else if (this.player.getSideRule().equals(SideRule.INSURANCE) && this.dealer.getHandSum() != 21) {
+            this.player.resetInsurance();
         }
 
-        while ((this.dealer.getHandSum() <= 16) && (dealerIsSafe)) {
+        while (this.dealer.getHandSum() <= 16 && dealerIsSafe) {
             dealerIsSafe = this.dealer.addCard();
             this.dealer.printHand(true);
         }
@@ -322,12 +337,23 @@ public class GameEngine {
         System.out.println("=================RESULTS=================");
         // Print an empty line.
         System.out.println();
-        if (dealerIsSafe == false || (playerIsSafe == true
-                && ((dealerIsSafe == true) && (this.player.getHandSum() > this.dealer.getHandSum())))) {
-            chipsEarned = this.player.getBet() * 2;
+        if (dealerIsSafe == false || playerIsSafe == true && dealerIsSafe == true
+                && this.player.getHandSum() > this.dealer.getHandSum()) {
+
+            if (this.player.getSideRule().equals(SideRule.DOUBLE_DOWN)) {
+                chipsEarned = (this.player.getBet() + this.player.getDoubleDown()) * 2;
+            } else if (this.player.getSideRule().equals(SideRule.INSURANCE) && dealerIsSafe == false) {
+                // Chips Earned already added.
+                chipsEarned = 0;
+            } else {
+                chipsEarned = this.player.getBet() * 2;
+            }
+
             this.player.setChips(this.player.getChips() + chipsEarned);
 
             System.out.println("Player " + this.player.getName() + " wins!!");
+        } else if (this.player.getSideRule().equals(SideRule.SURRENDER)) {
+            System.out.println("Player " + this.player.getName() + " surrendered..");
         } else {
             System.out.println("Player " + this.player.getName() + " loses..");
         }
@@ -347,7 +373,7 @@ public class GameEngine {
         this.dealer.clearHand();
         this.player.clearHand();
 
-        this.player.setBet(0);
+        this.player.resetBets();
 
         // Print an empty line.
         System.out.println();
@@ -362,8 +388,11 @@ public class GameEngine {
     private boolean keepPlaying() {
         // Prompt use if he wants to keep playing.
         System.out.println("-----------------------------------------");
-        System.out.print("Player " + this.player.getName() + ", do you want to keep playing? (Type 'Y' or 'N'): ");
-        final String keepPlaying = this.scanner.nextLine();
+        String keepPlaying;
+        do {
+            System.out.print("Player " + this.player.getName() + ", do you want to keep playing? (Type 'Y' or 'N'): ");
+            keepPlaying = this.scanner.nextLine();
+        } while (!keepPlaying.equalsIgnoreCase("Y") && !keepPlaying.equalsIgnoreCase("N"));
         System.out.println("-----------------------------------------");
 
         // Print an empty line.

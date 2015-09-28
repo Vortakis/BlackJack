@@ -15,7 +15,7 @@ public class BlackJack {
      * @param args command line arguments when run application: none.
      */
     public static void main(final String[] args) {
-        final String playerName;
+        String playerName;
         String numOfDecks;
         String numOfChips;
 
@@ -36,8 +36,10 @@ public class BlackJack {
         final Scanner scanner = new Scanner(System.in);
 
         // Prompt for the player's name.
-        System.out.print("Enter your name: ");
-        playerName = scanner.nextLine();
+        do {
+            System.out.print("Enter your name: ");
+            playerName = scanner.nextLine();
+        } while (playerName.equals(""));
 
         // Print an empty line.
         System.out.println();
