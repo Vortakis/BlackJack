@@ -45,14 +45,13 @@ public class BlackJack {
         System.out.println();
 
         // Prompt the user to set the number of decks.
-        int number;
         boolean invalid = true;
         do {
             try {
                 System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
                 numOfDecks = scanner.nextLine();
 
-                number = Integer.parseInt(numOfDecks);
+                Integer.parseInt(numOfDecks);
                 invalid = false;
             } catch (final NumberFormatException nfe) {
                 // Default is set to 4.
@@ -72,19 +71,32 @@ public class BlackJack {
         // Print an empty line.
         System.out.println();
 
-        // Prompt the user to set the number of chips to start with.
-        System.out.print("Enter the number of Chips you want to buy, or press Enter for Default(100 chips): ");
-        numOfChips = scanner.nextLine();
-        // Default is set to 100.
-        if (numOfChips.equals("")) {
-            numOfChips = "100";
-        }
+        invalid = true;
+        do {
+            try {
+                // Prompt the user to set the number of chips to start with.
+                System.out.print("Enter the number of Chips you want to buy, or press Enter for Default(100 chips): ");
+                numOfChips = scanner.nextLine();
+
+                Double.parseDouble(numOfChips);
+                invalid = false;
+            } catch (final NumberFormatException nfe) {
+                // Default is set to 100.
+                if (numOfChips.equals("")) {
+                    numOfChips = "100";
+                    invalid = false;
+                } else {
+                    // If input was not numeric.
+                    System.out.println("Invalid non-numeric value.");
+                    invalid = true;
+                }
+            }
+        } while (invalid);
+
         System.out.println("Initilal number of Chips: " + numOfChips);
 
         // Print an empty line.
         System.out.println();
-
-        scanner.close();
 
         // Start the game message.
         System.out.println("Good Job! Lets start the game!");
