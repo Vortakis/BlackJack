@@ -45,14 +45,13 @@ public class BlackJack {
         System.out.println();
 
         // Prompt the user to set the number of decks.
-        int number;
         boolean invalid = true;
         do {
             try {
                 System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
                 numOfDecks = scanner.nextLine();
 
-                number = Integer.parseInt(numOfDecks);
+                Integer.parseInt(numOfDecks);
                 invalid = false;
             } catch (final NumberFormatException nfe) {
                 // Default is set to 4.
@@ -83,6 +82,8 @@ public class BlackJack {
 
         // Print an empty line.
         System.out.println();
+
+        scanner.close();
 
         scanner.close();
 
