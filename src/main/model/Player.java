@@ -4,33 +4,50 @@
 package main.model;
 
 /**
- * Player Class.
+ * Player Class. It extends Hand Class, which enables Player to inherit all of its properties. In addition the Player
+ * object has the properties: Name, Chips, Bet, Side-Rule and other methods that enables him to take particular actions.
  *
  * @author Nikos Pavlou
  */
 public class Player extends Hand {
 
+    /**
+     * SideRule Enum.
+     */
     public enum SideRule {
-        INSURANCE, DOUBLE_DOWN, NONE, SURRENDER;
+        /** Insurance. */
+        INSURANCE,
+
+        /** Double Down. */
+        DOUBLE_DOWN,
+
+        /** Surrender. */
+        SURRENDER,
+
+        /** None. */
+        NONE;
     }
 
     /** Name of the player. */
     private String name;
 
     /** Number of chips the player holds. */
-    private int chips;
+    private double chips;
 
     /** Bet set by the player. */
-    private int bet;
+    private double bet;
 
+    /** Side Rule for the player. */
     private SideRule sideRule;
 
-    /** Insurance set by the player. */
-    private int insurance;
+    /** Insurance value. */
+    private double insurance;
 
-    private int doubleDown;
+    /** Double-down value. */
+    private double doubleDown;
 
-    private int surrender;
+    /** Surrender value. */
+    private double surrender;
 
     /**
      * Player constructor method.
@@ -38,7 +55,7 @@ public class Player extends Hand {
      * @param name of the player.
      * @param chips number of chips the player starts.
      */
-    public Player(final String name, final int chips) {
+    public Player(final String name, final double chips) {
         super();
         this.name = name;
         this.chips = chips;
@@ -62,68 +79,95 @@ public class Player extends Hand {
     /**
      * @return the chips.
      */
-    public int getChips() {
+    public double getChips() {
         return this.chips;
     }
 
     /**
      * @param chips the chips to set.
      */
-    public void setChips(final int chips) {
+    public void setChips(final double chips) {
         this.chips = chips;
     }
 
     /**
      * @return the bet.
      */
-    public int getBet() {
+    public double getBet() {
         return this.bet;
     }
 
     /**
      * @param bet the bet to set
      */
-    public void setBet(final int bet) {
+    public void setBet(final double bet) {
         this.bet = bet;
         this.chips -= bet;
     }
 
+    /**
+     * @return the sideRule.
+     */
     public SideRule getSideRule() {
         return this.sideRule;
     }
 
+    /**
+     * @param sideRule the sideRule to set.
+     */
     public void setSideRule(final SideRule sideRule) {
         this.sideRule = sideRule;
     }
 
-    public int getInsurance() {
+    /**
+     * @return the insurance.
+     */
+    public double getInsurance() {
         return this.insurance;
     }
 
+    /**
+     * @param insurance the insurance to set.
+     */
     public void setInsurance() {
         this.sideRule = SideRule.INSURANCE;
         this.insurance = this.bet / 2;
         this.chips -= this.insurance;
     }
 
+    /**
+     * Resets Insurance.
+     */
     public void resetInsurance() {
         this.insurance = 0;
     }
 
-    public int getDoubleDown() {
+    /**
+     * @return the doubleDown.
+     */
+    public double getDoubleDown() {
         return this.doubleDown;
     }
 
+    /**
+     * @param doubleDown the doubleDown to set.
+     */
     public void setDoubleDown() {
         this.sideRule = SideRule.DOUBLE_DOWN;
         this.doubleDown = this.bet;
         this.chips -= this.doubleDown;
     }
 
-    public int getSurrender() {
+    /**
+     * @return the surrender.
+     */
+    public double getSurrender() {
         return this.surrender;
     }
 
+    /**
+     * @param surrender the surrender to set.
+     */
     public void setSurrender() {
         this.sideRule = SideRule.SURRENDER;
         this.surrender = this.bet / 2;
@@ -131,6 +175,9 @@ public class Player extends Hand {
         this.bet = 0;
     }
 
+    /**
+     * Resets all bets and side-rules.
+     */
     public void resetBets() {
         this.sideRule = SideRule.NONE;
         this.doubleDown = 0;
@@ -138,26 +185,6 @@ public class Player extends Hand {
         this.surrender = 0;
         this.bet = 0;
     }
-
-    /**
-     * Insurance the bet.
-     */
-    /*
-     * public void insuranceBet() {
-     * this.chips -= this.bet / 2;
-     * this.bet += this.bet / 2;
-     * }
-     */
-
-    /**
-     * Doubles the bet the player has pre-set.
-     */
-    /*
-     * public void doubleBet() {
-     * this.chips -= this.bet;
-     * this.bet *= 2;
-     * }
-     */
 
     /**
      * Print player's stats.

@@ -68,6 +68,8 @@ public class BlackJack {
         // Print an empty line.
         System.out.println();
 
+        scanner.close();
+
         // Start the game message.
         System.out.println("Good Job! Lets start the game!");
         System.out.println("Press any Enter to continue...");
@@ -87,7 +89,7 @@ public class BlackJack {
         final GameEngine game = new GameEngine();
 
         // Initialise game.
-        game.initialiseGame(playerName, Integer.parseInt(numOfDecks), Integer.parseInt(numOfChips));
+        game.initialiseGame(playerName, Integer.parseInt(numOfDecks), Double.parseDouble(numOfChips));
 
         game.playGame();
     }

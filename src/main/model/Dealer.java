@@ -1,7 +1,8 @@
 package main.model;
 
 /**
- * Dealer Class.
+ * Dealer Class. It extends Hand Class, which enables Dealer to inherit all of its properties. In addition the Dealer
+ * object has the property: Deck and other methods that enables him to take particular actions.
  *
  * @author Nikos Pavlou
  */
@@ -37,7 +38,7 @@ public class Dealer extends Hand {
     }
 
     /**
-     * Adds a card from the deck to the hand.
+     * Adds a card from the deck to Dealer's hand.
      *
      * @param card drawn from the deck.
      * @return boolean whether sum of the cards in hand is below or equal to 21.
