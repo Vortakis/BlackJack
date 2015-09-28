@@ -20,7 +20,7 @@ public class Dealer extends Hand {
         super();
         this.deck = new Deck(numOfDecks);
 
-        System.out.println("Dealer shuffled and placed " + numOfDecks + " in the 'shoe'.");
+        System.out.println("Dealer shuffled and placed " + numOfDecks + " deck(s) in the 'shoe'.");
     }
 
     /**

@@ -90,18 +90,19 @@ public class GameEngine {
         String bet = "";
         System.out.println("-----------------------------------------");
 
+        System.out.print("Player " + this.player.getName() + ", please make a bet: ");
+
         // Make sure Bet Input gets a valid value.
         boolean invalid = true;
         do {
             try {
-                System.out.print("Player " + this.player.getName() + ", please make a bet: ");
                 bet = this.scanner.nextLine();
 
                 Double.parseDouble(bet);
                 invalid = false;
             } catch (final NumberFormatException nfe) {
                 // If input was not numeric.
-                System.out.println("Invalid non-numeric value.");
+                System.out.print("Invalid non-numeric value '" + bet + "'. Please provide a valid one: ");
                 invalid = true;
             }
         } while (invalid);
@@ -164,8 +165,9 @@ public class GameEngine {
         System.out.println("     'I'  if you want Insurance, ");
         System.out.println("     'SUR'  if you want Surrender, ");
         System.out.print("     or just press Enter to continue: ");
-        boolean invalid = true;
 
+        // Make sure player types valid side-rule.
+        boolean invalid = true;
         do {
             sideRule = this.scanner.nextLine();
             final int dealersFaceUpCard = this.dealer.getCardsInHand().get(0).getValue();
@@ -174,14 +176,14 @@ public class GameEngine {
                     || sideRule.equals("")) {
                 if (sideRule.equalsIgnoreCase("I") && dealersFaceUpCard != 1) {
                     System.out
-                    .println("Invalid insurance, dealer's face-up card is not an Ace. Please provide a valid one: ");
+                    .print("Invalid insurance, dealer's face-up card is not an Ace. Please provide a valid one: ");
                     invalid = true;
                 } else {
                     invalid = false;
                 }
             } else {
                 invalid = true;
-                System.out.println("Invalid input " + sideRule + ". Please provide a valid one: ");
+                System.out.print("Invalid input '" + sideRule + "'. Please provide a valid one: ");
             }
 
         } while (invalid);
@@ -244,9 +246,6 @@ public class GameEngine {
                 // Print an empty line.
                 System.out.println();
 
-                // Set playerIsSafe to false.
-                playerIsSafe = false;
-
                 // Exit while loop.
                 break;
             } else if (this.player.getSideRule().equals(SideRule.SURRENDER)) {
@@ -256,13 +255,29 @@ public class GameEngine {
                 // Print an empty line.
                 System.out.println();
 
+                // Set playerIsSafe to false.
+                playerIsSafe = false;
+
                 // Exit while loop.
                 break;
             }
 
             System.out.println("-----------------------------------------");
+
+            // Make sure player types valid action.
+            boolean invalid = true;
             System.out.print(this.player.getName() + ", type 'H' if you want to Hit or 'S' if you want to Stand: ");
-            action = this.scanner.nextLine();
+
+            do {
+                action = this.scanner.nextLine();
+
+                if (action.equalsIgnoreCase("H") || action.equalsIgnoreCase("S")) {
+                    invalid = false;
+                } else {
+                    System.out.print("Invalid input '" + action + "'. Please provide a valid one: ");
+                }
+            } while (invalid);
+
             System.out.println("-----------------------------------------");
 
             // Print an empty line.
@@ -399,10 +414,21 @@ public class GameEngine {
         // Prompt use if he wants to keep playing.
         System.out.println("-----------------------------------------");
         String keepPlaying;
+
+        System.out.print("Player " + this.player.getName() + ", do you want to keep playing? (Type 'Y' or 'N'): ");
+
+        // Make sure Bet Input gets a valid value.
+        boolean invalid = true;
         do {
-            System.out.print("Player " + this.player.getName() + ", do you want to keep playing? (Type 'Y' or 'N'): ");
             keepPlaying = this.scanner.nextLine();
-        } while (!keepPlaying.equalsIgnoreCase("Y") && !keepPlaying.equalsIgnoreCase("N"));
+
+            if (keepPlaying.equalsIgnoreCase("Y") || keepPlaying.equalsIgnoreCase("N")) {
+                invalid = false;
+            } else {
+                System.out.print("Invalid input '" + keepPlaying + "'. Please provide a valid one: ");
+            }
+        } while (invalid);
+
         System.out.println("-----------------------------------------");
 
         // Print an empty line.

@@ -35,6 +35,9 @@ public class BlackJack {
         // Scanner to read the command-line inputs.
         final Scanner scanner = new Scanner(System.in);
 
+        // Skip "Enter" input.
+        scanner.nextLine();
+
         // Prompt for the player's name.
         do {
             System.out.print("Enter your name: ");
@@ -45,11 +48,11 @@ public class BlackJack {
         System.out.println();
 
         // Prompt the user to set the number of decks.
+        System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
         // Make sure Number of Decks Input gets a valid value.
         boolean invalid = true;
         do {
             try {
-                System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
                 numOfDecks = scanner.nextLine();
 
                 Integer.parseInt(numOfDecks);
@@ -61,7 +64,7 @@ public class BlackJack {
                     invalid = false;
                 } else {
                     // If input was not numeric.
-                    System.out.println("Invalid non-numeric value.");
+                    System.out.print("Invalid non-numeric value '" + numOfDecks + "'. Please provide a valid one: ");
                     invalid = true;
                 }
             }
@@ -72,12 +75,12 @@ public class BlackJack {
         // Print an empty line.
         System.out.println();
 
+        // Prompt the user to set the number of chips to start with.
+        System.out.print("Enter the number of Chips you want to buy, or press Enter for Default(100 chips): ");
         // Make sure Chips Input gets a valid value.
         invalid = true;
         do {
             try {
-                // Prompt the user to set the number of chips to start with.
-                System.out.print("Enter the number of Chips you want to buy, or press Enter for Default(100 chips): ");
                 numOfChips = scanner.nextLine();
 
                 Double.parseDouble(numOfChips);
@@ -89,7 +92,7 @@ public class BlackJack {
                     invalid = false;
                 } else {
                     // If input was not numeric.
-                    System.out.println("Invalid non-numeric value.");
+                    System.out.print("Invalid non-numeric value '" + numOfChips + "'. Please provide a valid one: ");
                     invalid = true;
                 }
             }
@@ -107,6 +110,9 @@ public class BlackJack {
             System.in.read();
         } catch (final Exception e) {
         }
+
+        // Skip "Enter" input.
+        scanner.nextLine();
 
         // Print an empty line.
         System.out.println("=========================================");
