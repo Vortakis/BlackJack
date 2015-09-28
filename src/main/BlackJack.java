@@ -16,8 +16,8 @@ public class BlackJack {
      */
     public static void main(final String[] args) {
         String playerName;
-        String numOfDecks;
-        String numOfChips;
+        String numOfDecks = "";
+        String numOfChips = "";
 
         /**
          * START OF APPLICATION.
@@ -45,12 +45,28 @@ public class BlackJack {
         System.out.println();
 
         // Prompt the user to set the number of decks.
-        System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
-        numOfDecks = scanner.nextLine();
-        // Default is set to 4.
-        if (numOfDecks.equals("")) {
-            numOfDecks = "4";
-        }
+        int number;
+        boolean invalid = true;
+        do {
+            try {
+                System.out.print("Enter the number of Decks, or press Enter for Default(4 decks): ");
+                numOfDecks = scanner.nextLine();
+
+                number = Integer.parseInt(numOfDecks);
+                invalid = false;
+            } catch (final NumberFormatException nfe) {
+                // Default is set to 4.
+                if (numOfDecks.equals("")) {
+                    numOfDecks = "4";
+                    invalid = false;
+                } else {
+                    // If input was not numeric.
+                    System.out.println("Invalid non-numeric value.");
+                    invalid = true;
+                }
+            }
+        } while (invalid);
+
         System.out.println("Number of Decks: " + numOfDecks);
 
         // Print an empty line.
@@ -67,6 +83,8 @@ public class BlackJack {
 
         // Print an empty line.
         System.out.println();
+
+        scanner.close();
 
         // Start the game message.
         System.out.println("Good Job! Lets start the game!");
@@ -87,7 +105,7 @@ public class BlackJack {
         final GameEngine game = new GameEngine();
 
         // Initialise game.
-        game.initialiseGame(playerName, Integer.parseInt(numOfDecks), Integer.parseInt(numOfChips));
+        game.initialiseGame(playerName, Integer.parseInt(numOfDecks), Double.parseDouble(numOfChips));
 
         game.playGame();
     }

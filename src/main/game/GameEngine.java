@@ -28,9 +28,6 @@ public class GameEngine {
     /** Scanner to read the command-line inputs. */
     private final Scanner scanner;
 
-    /** Insurance flag. */
-    private final boolean insuranceFlag = false;
-
     /**
      * Game Engine constructor.
      */
@@ -45,7 +42,7 @@ public class GameEngine {
      * @param numOfDecks the number of decks in the game.
      * @param numOfChips the initial number of chips.
      */
-    public void initialiseGame(final String playerName, final int numOfDecks, final int numOfChips) {
+    public void initialiseGame(final String playerName, final int numOfDecks, final double numOfChips) {
         this.player = new Player(playerName, numOfChips);
         this.dealer = new Dealer(numOfDecks);
     }
@@ -97,7 +94,7 @@ public class GameEngine {
             bet = this.scanner.nextLine();
         } while (bet.equals(""));
         System.out.println("-----------------------------------------");
-        this.player.setBet(Integer.parseInt(bet));
+        this.player.setBet(Double.parseDouble(bet));
 
         // Print an empty line.
         System.out.println();
@@ -301,7 +298,7 @@ public class GameEngine {
     private boolean dealersTurn() {
         boolean dealerIsSafe = true;
         if (this.player.getSideRule().equals(SideRule.INSURANCE) && this.dealer.getHandSum() == 21) {
-            final int earnedChips = this.player.getInsurance() + this.player.getBet();
+            final double earnedChips = this.player.getInsurance() + this.player.getBet();
             this.player.setChips(earnedChips);
             return false;
         } else if (this.player.getSideRule().equals(SideRule.INSURANCE) && this.dealer.getHandSum() != 21) {
@@ -332,7 +329,7 @@ public class GameEngine {
      * @param dealerIsSafe boolean if dealer still has a chance to win.
      */
     private void calculateResults(final boolean playerIsSafe, final boolean dealerIsSafe) {
-        final int chipsEarned;
+        final double chipsEarned;
 
         System.out.println("=================RESULTS=================");
         // Print an empty line.
@@ -430,6 +427,7 @@ public class GameEngine {
             System.out.println();
             this.player.printPlayerStats();
             System.out.println("============================GAME OVER=================================");
+            this.scanner.close();
         }
     }
 }
