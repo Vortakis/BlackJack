@@ -21,6 +21,13 @@ public class Hand {
     }
 
     /**
+     * @return list of cards that exist in the hand.
+     */
+    public ArrayList<Card> getCardsInHand() {
+        return this.hand;
+    }
+
+    /**
      * Discards all the cards from the hand.
      */
     public void clearHand() {
@@ -104,7 +111,7 @@ public class Hand {
         // Loop through the cards in the hand.
         for (int cardIndex = 0; cardIndex < this.hand.size(); cardIndex++) {
             // If first card is hidden, don't display it.
-            if (!showFirstCard && cardIndex == 0) {
+            if (!showFirstCard && cardIndex == 1) {
                 System.out.println("[FACE DOWN]");
             } else {
                 System.out.println(this.hand.get(cardIndex).toString());

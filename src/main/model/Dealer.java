@@ -7,7 +7,7 @@ package main.model;
  */
 public class Dealer extends Hand {
 
-    /**     */
+    /** Deck of a game, hold by the dealer. */
     private Deck deck;
 
     /**
@@ -47,13 +47,16 @@ public class Dealer extends Hand {
         return super.addCard(this.deck.dealCard());
     }
 
+    /**
+     * @return deal one Card.
+     */
     public Card dealCard() {
         return this.deck.dealCard();
     }
 
     /**
-    *
-    */
+     * Prints Dealer's hand.
+     */
     @Override
     public void printHand(final boolean showFirstCard) {
         System.out.println("Dealer");

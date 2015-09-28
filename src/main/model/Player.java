@@ -75,7 +75,23 @@ public class Player extends Hand {
     }
 
     /**
-     *
+     * Doubles the bet the player has pre-set.
+     */
+    public void doubleBet() {
+        this.chips -= this.bet;
+        this.bet *= 2;
+    }
+
+    /**
+     * Insurance the bet.
+     */
+    public void insuranceBet() {
+        this.chips -= this.bet / 2;
+        this.bet += this.bet / 2;
+    }
+
+    /**
+     * Print player's stats.
      */
     public void printPlayerStats() {
         System.out.println("=========================================");
@@ -87,8 +103,8 @@ public class Player extends Hand {
     }
 
     /**
-    *
-    */
+     * Print player's hand.
+     */
     @Override
     public void printHand(final boolean showFirstCard) {
         System.out.println(this.name);
