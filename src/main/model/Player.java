@@ -128,11 +128,17 @@ public class Player extends Hand {
 
     /**
      * @param insurance the insurance to set.
+     * @return boolean true if it can be performed - false otherwise.
      */
-    public void setInsurance() {
+    public boolean setInsurance() {
+        // Return false if rest of chips is below zero.
+        if (this.chips - this.bet / 2 < 0) {
+            return false;
+        }
         this.sideRule = SideRule.INSURANCE;
         this.insurance = this.bet / 2;
         this.chips -= this.insurance;
+        return true;
     }
 
     /**
@@ -151,11 +157,17 @@ public class Player extends Hand {
 
     /**
      * @param doubleDown the doubleDown to set.
+     * @return boolean true if it can be performed - false otherwise.
      */
-    public void setDoubleDown() {
+    public boolean setDoubleDown() {
+        // Return false if rest of chips is below zero.
+        if (this.chips - this.bet < 0) {
+            return false;
+        }
         this.sideRule = SideRule.DOUBLE_DOWN;
         this.doubleDown = this.bet;
         this.chips -= this.doubleDown;
+        return true;
     }
 
     /**

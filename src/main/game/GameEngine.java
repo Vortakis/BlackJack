@@ -94,15 +94,34 @@ public class GameEngine {
 
         // Make sure Bet Input gets a valid value.
         boolean invalid = true;
+        double number = 0;
         do {
             try {
                 bet = this.scanner.nextLine();
 
-                Double.parseDouble(bet);
+                number = Double.parseDouble(bet);
                 invalid = false;
+
+                // If number is negative or greate than number of chips.
+                if (number <= 0 || number > this.player.getChips()) {
+                    invalid = true;
+                    throw new IllegalArgumentException();
+                }
             } catch (final NumberFormatException nfe) {
                 // If input was not numeric.
                 System.out.print("Invalid non-numeric value '" + bet + "'. Please provide a valid one: ");
+                invalid = true;
+            } catch (final IllegalArgumentException iae) {
+
+                // Input was negative.
+                if (number <= 0) {
+                    System.out.print("Invalid negative or zero value '" + bet + "'. Please provide a valid one: ");
+                } else {
+                    // Input was greater than number of chips.
+                    System.out.print("Invalid number of bet '" + bet + "' greeate than number of chips  '"
+                            + this.player.getChips() + "'. Please provide a valid one: ");
+                }
+
                 invalid = true;
             }
         } while (invalid);
@@ -193,23 +212,35 @@ public class GameEngine {
         // Print an empty line.
         System.out.println();
 
+        final boolean enoughChips;
         switch (sideRule.toUpperCase()) {
             case "DD":
-                this.player.setDoubleDown();
-                // Print updated player stas.
-                this.player.printPlayerStats();
+                enoughChips = this.player.setDoubleDown();
 
-                // Print an empty line.
-                System.out.println();
+                // Check if chips left are below 0, then skip double-down.
+                if (!enoughChips) {
+                    System.out.println("Unable to do Double-Down - Not enough chips.");
+                } else {
+                    // Print updated player stas.
+                    this.player.printPlayerStats();
+
+                    // Print an empty line.
+                    System.out.println();
+                }
                 break;
             case "I":
-                this.player.setInsurance();
+                enoughChips = this.player.setInsurance();
 
-                // Print updated player stas.
-                this.player.printPlayerStats();
+                // Check if chips left are below 0, then skip insurance.
+                if (!enoughChips) {
+                    System.out.println("Unable to do Insurance - Not enough chips.");
+                } else {
+                    // Print updated player stas.
+                    this.player.printPlayerStats();
 
-                // Print an empty line.
-                System.out.println();
+                    // Print an empty line.
+                    System.out.println();
+                }
                 break;
             case "SUR":
                 this.player.setSurrender();

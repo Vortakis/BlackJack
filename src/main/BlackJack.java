@@ -55,8 +55,13 @@ public class BlackJack {
             try {
                 numOfDecks = scanner.nextLine();
 
-                Integer.parseInt(numOfDecks);
+                final int number = Integer.parseInt(numOfDecks);
                 invalid = false;
+
+                if (number <= 0) {
+                    invalid = true;
+                    throw new IllegalArgumentException();
+                }
             } catch (final NumberFormatException nfe) {
                 // Default is set to 4.
                 if (numOfDecks.equals("")) {
@@ -67,6 +72,10 @@ public class BlackJack {
                     System.out.print("Invalid non-numeric value '" + numOfDecks + "'. Please provide a valid one: ");
                     invalid = true;
                 }
+            } catch (final IllegalArgumentException iae) {
+                // Input was negative.
+                System.out.print("Invalid negative or zero value '" + numOfDecks + "'. Please provide a valid one: ");
+                invalid = true;
             }
         } while (invalid);
 
@@ -83,8 +92,13 @@ public class BlackJack {
             try {
                 numOfChips = scanner.nextLine();
 
-                Double.parseDouble(numOfChips);
+                final double number = Double.parseDouble(numOfChips);
                 invalid = false;
+
+                if (number <= 0) {
+                    invalid = true;
+                    throw new IllegalArgumentException();
+                }
             } catch (final NumberFormatException nfe) {
                 // Default is set to 100.
                 if (numOfChips.equals("")) {
@@ -95,6 +109,10 @@ public class BlackJack {
                     System.out.print("Invalid non-numeric value '" + numOfChips + "'. Please provide a valid one: ");
                     invalid = true;
                 }
+            } catch (final IllegalArgumentException iae) {
+                // Input was negative.
+                System.out.print("Invalid negative or zero value '" + numOfChips + "'. Please provide a valid one: ");
+                invalid = true;
             }
         } while (invalid);
 
