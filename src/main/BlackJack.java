@@ -45,6 +45,7 @@ public class BlackJack {
         System.out.println();
 
         // Prompt the user to set the number of decks.
+        // Make sure Number of Decks Input gets a valid value.
         boolean invalid = true;
         do {
             try {
@@ -71,6 +72,7 @@ public class BlackJack {
         // Print an empty line.
         System.out.println();
 
+        // Make sure Chips Input gets a valid value.
         invalid = true;
         do {
             try {

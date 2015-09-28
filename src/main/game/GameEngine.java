@@ -87,12 +87,25 @@ public class GameEngine {
      * Player bets chips for this game.
      */
     private void playerBets() {
-        String bet;
+        String bet = "";
         System.out.println("-----------------------------------------");
+
+        // Make sure Bet Input gets a valid value.
+        boolean invalid = true;
         do {
-            System.out.print("Player " + this.player.getName() + ", please make a bet: ");
-            bet = this.scanner.nextLine();
-        } while (bet.equals(""));
+            try {
+                System.out.print("Player " + this.player.getName() + ", please make a bet: ");
+                bet = this.scanner.nextLine();
+
+                Double.parseDouble(bet);
+                invalid = false;
+            } catch (final NumberFormatException nfe) {
+                // If input was not numeric.
+                System.out.println("Invalid non-numeric value.");
+                invalid = true;
+            }
+        } while (invalid);
+
         System.out.println("-----------------------------------------");
         this.player.setBet(Double.parseDouble(bet));
 
